@@ -60,6 +60,9 @@ def xml2text(xml):
         if child.tag == qn('w:t'):
             t_text = child.text
             text += t_text if t_text is not None else ''
+        elif child.tag == qn('m:t'):
+            t_text = child.text
+            text += t_text if t_text is not None else ''
         elif child.tag == qn('w:tab'):
             text += '\t'
         elif child.tag in (qn('w:br'), qn('w:cr')):
