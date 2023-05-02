@@ -8,7 +8,7 @@ import os
 import sys
 
 
-nsmap = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main'}
+nsmap = {'w': 'http://schemas.openxmlformats.org/wordprocessingml/2006/main', 'm': 'http://schemas.openxmlformats.org/officeDocument/2006/math'}
 
 
 def process_args():
