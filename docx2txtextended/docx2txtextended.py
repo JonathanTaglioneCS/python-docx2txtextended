@@ -46,6 +46,17 @@ def qn(tag):
     uri = nsmap[prefix]
     return '{{{}}}{}'.format(uri, tagroot)
 
+def qns(ns):
+    """
+    Stands for 'qualified name', a utility function to turn a namespace
+    prefixed tag name into a Clark-notation qualified tag name for lxml. For
+    example, ``qn('p:cSld')`` returns ``'{http://schemas.../main}cSld'``.
+    Source: https://github.com/python-openxml/python-docx/
+    --> version that outputs only the namespace part
+    """
+    uri = nsmap[ns]
+    return '{{{}}}'.format(uri)
+
 
 def xml2text(xml):
     """
@@ -63,6 +74,8 @@ def xml2text(xml):
         elif child.tag == qn('m:t'):
             t_text = child.text
             text += t_text if t_text is not None else ''
+        elif child.tag.startswith(qns('m')):
+            text += child.tag
         elif child.tag == qn('w:tab'):
             text += '\t'
         elif child.tag in (qn('w:br'), qn('w:cr')):
