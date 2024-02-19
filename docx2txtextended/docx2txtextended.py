@@ -58,7 +58,7 @@ def qns(ns):
     return '{{{}}}'.format(uri)
 
 
-def xml2text(xml):
+def xml2text(xml, styles_list):
     """
     A string representing the textual content of this run, with content
     child elements like ``<w:tab/>`` translated to their Python
@@ -68,6 +68,10 @@ def xml2text(xml):
     text = u''
     root = ET.fromstring(xml)
     for child in root.iter():
+        if child.tag == qn('w:pStyle')
+            if styles_list is not None and child.attrib[qn('w:val')] is not None and child.attrib[qn('w:val')] in styles_list:
+                text += child.attrib[qn('w:val')]
+                text += ' '
         if child.tag == qn('w:t'):
             t_text = child.text
             text += t_text if t_text is not None else ''
@@ -85,7 +89,7 @@ def xml2text(xml):
     return text
 
 
-def process(docx, img_dir=None):
+def process(docx, img_dir=None, styles_list=None):
     text = u''
 
     # unzip the docx in memory
@@ -97,18 +101,18 @@ def process(docx, img_dir=None):
     header_xmls = 'word/header[0-9]*.xml'
     for fname in filelist:
         if re.match(header_xmls, fname):
-            text += xml2text(zipf.read(fname))
+            text += xml2text(zipf.read(fname), styles_list)
 
     # get main text
     doc_xml = 'word/document.xml'
-    text += xml2text(zipf.read(doc_xml))
+    text += xml2text(zipf.read(doc_xml), styles_list)
 
     # get footer text
     # there can be 3 footer files in the zip
     footer_xmls = 'word/footer[0-9]*.xml'
     for fname in filelist:
         if re.match(footer_xmls, fname):
-            text += xml2text(zipf.read(fname))
+            text += xml2text(zipf.read(fname), styles_list)
 
     if img_dir is not None:
         # extract images
