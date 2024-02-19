@@ -68,7 +68,7 @@ def xml2text(xml, styles_list):
     text = u''
     root = ET.fromstring(xml)
     for child in root.iter():
-        if child.tag == qn('w:pStyle')
+        if child.tag == qn('w:pStyle'):
             if styles_list is not None and child.attrib[qn('w:val')] is not None and child.attrib[qn('w:val')] in styles_list:
                 text += child.attrib[qn('w:val')]
                 text += ' '
