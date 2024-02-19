@@ -7,7 +7,7 @@ scripts = glob.glob('bin/*')
 setup(
   name='docx2txtextended',
   packages=['docx2txtextended'],
-  version='0.9',
+  version='0.9.1',
   description='A pure python-based utility to extract text and images '
               'from docx files, extended for math formulas and styles.',
   author='J Taglione',
